@@ -1,3 +1,8 @@
+# 1.2.0
+2021-08-11
+
+* Better compression, no gaps, no overlaps 
+
 # 1.1.1
 2021-06-17
 
