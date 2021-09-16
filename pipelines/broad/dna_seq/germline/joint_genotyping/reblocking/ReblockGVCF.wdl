@@ -5,7 +5,7 @@ import "../../../../../../tasks/broad/Qc.wdl" as QC
 
 workflow ReblockGVCF {
 
-  String pipeline_version = "1.2.0"
+  String pipeline_version = "2.0.0"
 
   input {
     File gvcf
@@ -51,3 +51,43 @@ workflow ReblockGVCF {
     allowNestedInputs: true
   }
 }
+
+task Reblock {
+
+  input {
+    File gvcf
+    File gvcf_index
+
+    File ref_fasta
+    File ref_fasta_index
+    File ref_dict
+
+    String output_vcf_filename
+    String docker_image = "us.gcr.io/broad-gatk/gatk:4.2.2.0"
+  }
+
+  Int disk_size = ceil(size(gvcf, "GiB")) * 2 + 3
+
+  command {
+    gatk --java-options "-Xms3g -Xmx3g" \
+      ReblockGVCF \
+      -R ~{ref_fasta} \
+      -V ~{gvcf} \
+      -do-qual-approx \
+      --floor-blocks -GQB 20 -GQB 30 -GQB 40 \
+      -O ~{output_vcf_filename}
+  }
+
+  runtime {
+    memory: "3.75 GB"
+    bootDiskSizeGb: "15"
+    disks: "local-disk " + disk_size + " HDD"
+    preemptible: 3
+    docker: docker_image
+  }
+
+  output {
+    File output_vcf = output_vcf_filename
+    File output_vcf_index = output_vcf_filename + ".tbi"
+  }
+} 

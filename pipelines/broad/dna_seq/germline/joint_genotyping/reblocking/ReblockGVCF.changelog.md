@@ -1,14 +1,17 @@
-# 1.2.0
-2021-08-11
-
-* Better compression, no gaps, no overlaps 
-
-# 1.1.1
-2021-06-17
+# 2.1.0
+2021-09-16
 
 * Updated ReblockGVCF to support reblocking as the default for germline sequencing pipelines
-    * Added ref_dict, ref_fasta, and ref_fasta_index as pipeline inputs
     * Moved the task definition for Reblock to GermlineVariantDiscovery.wdl
+
+# 2.0.0
+2021-08-17
+
+Updated to ReblockGVCF in [GATK 4.2.2.0](https://github.com/broadinstitute/gatk/releases/tag/4.1.1.0).  Now output GVCFs: 
+  *  Cover every position
+  *  Do not contain overlapping reference blocks
+  *  Have correct reference allele following trimmed deletions
+Tool, task, and workflow now require a reference.
 
 # 1.1.0
 2020-09-25
