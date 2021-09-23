@@ -149,7 +149,7 @@ task GenotypeGVCFs {
     Int disk_size
     # This is needed for gVCFs generated with GATK3 HaplotypeCaller
     Boolean allow_old_rms_mapping_quality_annotation_data = false
-    String gatk_docker = "us.gcr.io/broad-dsde-methods/ggvcfs_on_reblocked@sha256:c1633e1044d854084685bedff89fc47b6d305aaa714231c8828c560fa3b942c2"
+    String gatk_docker = "us.gcr.io/broad-dsde-methods/ggvcfs_on_reblocked@sha256:3aca7daea1a5a9811d8d688f0bdb903854322705d1e3ea390ceb0d96c1570ab2"
   }
 
   parameter_meta {
