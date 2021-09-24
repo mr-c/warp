@@ -15,4 +15,6 @@ The GATK branch ldg_VCFcomparator (4f0292abaeb7cabb527ca830048520e8aecdbde4) can
  java -jar gatk.compare.jar VCFComparator -V:expected $truth -V:actual $test  --ignore-quals -R $hg38 --warn-on-errors \
  --allow-extra-alleles --allow-missing-stars  --ignore-filters --ignore-attribute DP --ignore-attribute VQSLOD --ignore-attribute culprit
 
+Lots of warnings about AN or InbreedingCoeff mismatches, but only exceptions that output VCs are of concern
+
 Exome tests needed VQSR indel Gaussians reduced to 3 (only 50 exomes -- not a lot of indels; --ignore-filters --ignore-attribute VQSLOD --ignore-attribute culprit)
