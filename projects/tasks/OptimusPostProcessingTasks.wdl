@@ -85,7 +85,7 @@ task MergeLooms {
   runtime {
     docker: docker
     cpu: 1
-    memory: "~{machine_mem_mb} GiB"
+    memory: "~{machine_mem_mb} MiB"
     disks: "local-disk ~{disk} HDD"
   }
 
