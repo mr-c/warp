@@ -7,7 +7,7 @@ task CheckMetadata {
     Array[String] organ
 
     String docker = "python:3.7.2"
-    Int memory = 3
+    Int machine_mem_mb = 3000
     Int disk = 20
   }
 
@@ -49,7 +49,7 @@ task CheckMetadata {
   runtime {
     docker: docker
     cpu: 1
-    memory: "~{memory} GiB"
+    memory: "~{machine_mem_mb} MiB"
     disks: "local-disk ~{disk} HDD"
   }
 }
@@ -67,7 +67,7 @@ task MergeLooms {
 
     String docker = "quay.io/humancellatlas/hca_post_processing:2.0"
 
-    Int memory = ceil(size(library_looms, "G"))+ 10
+    Int machine_mem_mb = ceil(size(library_looms, "MiB"))+ 10000
     Int disk = ceil((size(library_looms, "G") * 4)) + 50
   }
 
@@ -85,7 +85,7 @@ task MergeLooms {
   runtime {
     docker: docker
     cpu: 1
-    memory: "~{memory} GiB"
+    memory: "~{machine_mem_mb} GiB"
     disks: "local-disk ~{disk} HDD"
   }
 
@@ -102,7 +102,7 @@ task GetInputMetadata {
 
     String docker = "quay.io/humancellatlas/hca_post_processing:2.0"
 
-    Int memory = ceil(size(analysis_file_jsons, "G")) + 3
+    Int machine_mem_mb = ceil(size(analysis_file_jsons, "MiB")) + 3000
     Int disk = ceil((size(analysis_file_jsons, "G") * 3)) + 20
   }
   command {
@@ -113,7 +113,7 @@ task GetInputMetadata {
   runtime {
     docker: docker
     cpu: 1
-    memory: "~{memory} GiB"
+    memory: "~{machine_mem_mb} MiB"
     disks: "local-disk ~{disk} HDD"
   }
   output {
@@ -132,7 +132,7 @@ task CreateAdapterJson {
     String version_timestamp
     String pipeline_version
 
-    Int memory = ceil((size(project_loom, "G") * 1.5)) + 5
+    Int machine_mem_mb = ceil((size(project_loom, "MiB") * 1.5)) + 5000
     Int disk = ceil((size(project_loom, "G") * 3)) + 20
     String docker ="quay.io/humancellatlas/hca_post_processing:2.0"
 
@@ -167,7 +167,7 @@ task CreateAdapterJson {
   runtime {
     docker: docker
     cpu: 1
-    memory: "~{memory} GiB"
+    memory: "~{machine_mem_mb} MiB"
     disks: "local-disk ~{disk} HDD"
   }
 

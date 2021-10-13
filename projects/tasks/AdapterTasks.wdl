@@ -11,7 +11,7 @@ task CheckInput {
     String illegal_characters = ""
 
     String docker = "python:3.7.2"
-    Int memory = 3
+    Int machine_mem_mb = 3000
     Int disk = 10
   }
 
@@ -45,7 +45,7 @@ task CheckInput {
   runtime {
     docker: docker
     cpu: 1
-    memory: "~{memory} GiB"
+    memory: "~{machine_mem_mb} MiB"
     disks: "local-disk ~{disk} HDD"
   }
   output {
@@ -106,7 +106,7 @@ task MergeLooms {
     String output_basename
 
     String docker = "quay.io/humancellatlas/hca_post_processing:2.0"
-    Int memory = ceil(size(output_looms, "G"))+ 10
+    Int machine_mem_mb = ceil(size(output_looms, "MiB"))+ 1000
     Int disk = ceil((size(output_looms, "G") * 4)) + 50
   }
 
@@ -123,7 +123,7 @@ task MergeLooms {
   runtime {
     docker: docker
     cpu: 1
-    memory: "~{memory} GiB"
+    memory: "~{machine_mem_mb} GiB"
     disks: "local-disk ~{disk} HDD"
   }
   output {
@@ -502,7 +502,7 @@ task CopyToStagingBucket {
 
     String docker = "us.gcr.io/broad-gotc-prod/pipeline-tools:latest"
     Int cpu = 1
-    Int memory = ceil((size(data_objects, "G") * 1.5)) + 5
+    Int machine_mem_mb = ceil((size(data_objects, "MiB") * 1.5)) + 5000
     Int disk = ceil((size(data_objects, "G") * 3)) + 20
   }
 
@@ -522,7 +522,7 @@ task CopyToStagingBucket {
   runtime {
     docker: docker
     cpu: cpu
-    memory: "~{memory} GiB"
+    memory: "~{machine_mem_mb} MiB"
     disks: "local-disk ~{disk} HDD"
   }
 }
@@ -532,6 +532,7 @@ task GetPipelineVersion {
     String pipeline_version
     String prefix = "MergeOptimusLooms_v"
     String docker = "ubuntu:18.04"
+    Int machine_mem_mb = 3000
   }
   command {
     echo ~{prefix}~{pipeline_version} > pipeline_version.txt
@@ -542,7 +543,7 @@ task GetPipelineVersion {
   runtime {
     docker: docker
     cpu: 1
-    memory: "3 GiB"
+    memory: "~{machine_mem_mb} MiB"
     disks: "local-disk 10 HDD"
   }
 }
